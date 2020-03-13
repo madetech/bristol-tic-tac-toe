@@ -9,6 +9,6 @@ activate:
 	source venv/bin/activate
 
 .PHONY: test
-test: install activate
+test: activate
 	pytest
 	
