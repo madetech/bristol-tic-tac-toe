@@ -8,8 +8,10 @@ class GetBoard(object):
         self.board = board
 
     def execute(self):
-        return [[None, None, None], [None, 'X', None], [None, None, None]] if self.board.piece_placed else [[None, None, None], [None, None, None], [None, None, None]]
-
+        presentable_board = [[None, None, None], [None, None, None], [None, None, None]]
+        if self.board.piece_placed:
+            presentable_board[1][1] = 'X'
+        return presentable_board
 
 class PlacePiece:
     def __init__(self, board):
@@ -36,4 +38,14 @@ def test_someone_can_place_an_x_in_the_middle_of_the_board():
         [None, None, None],
         [None, "X", None],
         [None, None, None],
+    ]
+
+def test_someone_can_place_x_in_the_bottom_left_corner():
+    board = Board()
+    PlacePiece(board).execute(2, 0)
+
+    assert GetBoard(board).execute() == [
+        [None, None, None],
+        [None, None, None],
+        ['X', None, None],
     ]
