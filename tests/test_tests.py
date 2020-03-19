@@ -44,3 +44,9 @@ def test_someone_can_place_x_in_the_bottom_left_corner():
         [None, None, None],
         ['X', None, None],
     ]
+
+def test_someone_cannot_place_piece_in_square_that_is_taken():
+    board = Board()
+    PlacePiece(board).execute(2, 0)
+    success = PlacePiece(board).execute(2, 0)
+    assert success == False
