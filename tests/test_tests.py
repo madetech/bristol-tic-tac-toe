@@ -14,7 +14,10 @@ class PlacePiece:
         self.board = board
 
     def execute(self, x, y):
+        if self.board.board[x][y] is not None:
+            return False
         self.board.board[x][y] = 'X'
+        return True
 
 def test_at_the_start_of_the_game_the_board_is_empty():
     board = Board()
@@ -50,3 +53,8 @@ def test_someone_cannot_place_piece_in_square_that_is_taken():
     PlacePiece(board).execute(2, 0)
     success = PlacePiece(board).execute(2, 0)
     assert success == False
+
+def test_when_someone_places_x_success_is_returned():
+    board = Board()
+    success = PlacePiece(board).execute(2, 0)
+    assert success == True

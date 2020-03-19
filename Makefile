@@ -9,6 +9,5 @@ activate:
 	source venv/bin/activate
 
 .PHONY: test
-test: install
+test:
 	source venv/bin/activate && pytest
-	
