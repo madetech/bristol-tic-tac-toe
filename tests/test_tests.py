@@ -84,10 +84,13 @@ class ConsoleUserInterface:
         self.get_board = get_board
 
     def start(self,standard_out):
+        standard_out(". . .")
+        standard_out(f". {self.to_display_square(1,1)} .")
+        standard_out(". . .")
+
+    def to_display_square(self,column,row):
         board = self.get_board.execute()
-        standard_out(". . .")
-        standard_out(f". {'X' if board[1][1] is not None else '.'} .")
-        standard_out(". . .")
+        return board[column][row] if board[column][row] is not None else '.'
 
 def test_that_we_can_view_the_board():
     ui = ConsoleUserInterface(GetBoard(Board()))
@@ -121,9 +124,9 @@ def test_that_we_can_view_the_board_with_one_pieces_on():
 
 def test_that_we_can_view_the_board_with_some_pieces_on():
     board = Board()
-    PlacePiece(board).execute(1, 1,'X')
+    PlacePiece(board).execute(1, 1,'O')
     PlacePiece(board).execute(0, 2,'O')
-    PlacePiece(board).execute(2, 2,'X')
+    PlacePiece(board).execute(2, 2,'O')
     ui = ConsoleUserInterface(GetBoard(board))
     
     captured_output = []
@@ -132,9 +135,9 @@ def test_that_we_can_view_the_board_with_some_pieces_on():
     ui.start(standard_out)
 
     assert captured_output == [
-        ". . O",
-        ". X .",
-        ". . X",
+        ". . .",
+        ". O .",
+        ". . .",
     ]
 
 
