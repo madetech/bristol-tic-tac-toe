@@ -89,7 +89,6 @@ class ConsoleUserInterface:
         standard_out("")
         standard_out("")
         standard_out("")
-    
 
 def test_that_we_can_view_the_board():
     ui = ConsoleUserInterface(GetBoard(Board()))
@@ -97,6 +96,8 @@ def test_that_we_can_view_the_board():
     standard_out = lambda input:captured_output.append(input)
     ui.start(standard_out)
     assert len(captured_output) == 3
-
-
-
+    assert captured_output == [
+            ". . .",
+            ". . .",
+            ". . .",
+    ]
