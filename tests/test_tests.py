@@ -81,11 +81,12 @@ def test_someone_can_place_o_on_board():
 
 class ConsoleUserInterface:
     def __init__(self,get_board):
-        pass
+        self.get_board = get_board
 
     def start(self,standard_out):
+        board = self.get_board.execute()
         standard_out(". . .")
-        standard_out(". . .")
+        standard_out(f". {'X' if board[1][1] is not None else '.'} .")
         standard_out(". . .")
 
 def test_that_we_can_view_the_board():
@@ -100,6 +101,40 @@ def test_that_we_can_view_the_board():
         ". . .",
         ". . .",
         ". . .",
+    ]
+
+def test_that_we_can_view_the_board_with_one_pieces_on():
+    board = Board()
+    PlacePiece(board).execute(1, 1,'X')
+    ui = ConsoleUserInterface(GetBoard(board))
+    
+    captured_output = []
+    standard_out = lambda input:captured_output.append(input)
+    
+    ui.start(standard_out)
+
+    assert captured_output == [
+        ". . .",
+        ". X .",
+        ". . .",
+    ]
+
+def test_that_we_can_view_the_board_with_some_pieces_on():
+    board = Board()
+    PlacePiece(board).execute(1, 1,'X')
+    PlacePiece(board).execute(0, 2,'O')
+    PlacePiece(board).execute(2, 2,'X')
+    ui = ConsoleUserInterface(GetBoard(board))
+    
+    captured_output = []
+    standard_out = lambda input:captured_output.append(input)
+    
+    ui.start(standard_out)
+
+    assert captured_output == [
+        ". . O",
+        ". X .",
+        ". . X",
     ]
 
 
