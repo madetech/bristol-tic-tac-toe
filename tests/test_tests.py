@@ -14,10 +14,11 @@ class PlacePiece:
         self.board = board
 
     def execute(self, x, y, piece):
-        if self.board.board[x][y] is not None:
-            return False
-        self.board.board[x][y] = piece
-        return True
+        is_square_empty = self.board.board[x][y] is None
+
+        if is_square_empty:
+            self.board.board[x][y] = piece
+        return is_square_empty
 
 def test_at_the_start_of_the_game_the_board_is_empty():
     board = Board()
@@ -26,7 +27,6 @@ def test_at_the_start_of_the_game_the_board_is_empty():
         [None, None, None],
         [None, None, None],
     ]
-
 
 def test_someone_can_place_an_x_in_the_middle_of_the_board():
     board = Board()
@@ -53,6 +53,16 @@ def test_someone_cannot_place_piece_in_square_that_is_taken():
     PlacePiece(board).execute(2, 0,'X')
     success = PlacePiece(board).execute(2, 0,'X')
     assert success == False
+
+def test_cannot_place_piece_in_square_that_is_taken_by_other_player():
+    board = Board()
+    PlacePiece(board).execute(2, 0,'X')
+    success = PlacePiece(board).execute(2, 0,'O')
+    assert GetBoard(board).execute() == [
+        [None, None, None],
+        [None, None, None],
+        ['X', None, None],
+    ]
 
 def test_when_someone_places_x_success_is_returned():
     board = Board()
