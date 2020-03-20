@@ -79,9 +79,24 @@ def test_someone_can_place_o_on_board():
         [None, None, None],
     ]
 
+
+
+class ConsoleUserInterface:
+    def __init__(self,get_board):
+        pass
+
+    def start(self,standard_out):
+        standard_out("")
+        standard_out("")
+        standard_out("")
+    
+
 def test_that_we_can_view_the_board():
     ui = ConsoleUserInterface(GetBoard(Board()))
-    ui.start()
+    captured_output = []
+    standard_out = lambda input:captured_output.append(input)
+    ui.start(standard_out)
+    assert len(captured_output) == 3
 
 
 
