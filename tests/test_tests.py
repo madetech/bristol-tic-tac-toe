@@ -84,9 +84,14 @@ class ConsoleUserInterface:
         self.get_board = get_board
 
     def start(self,standard_out):
-        standard_out(". . .")
-        standard_out(f". {self.to_display_square(1,1)} .")
-        standard_out(". . .")
+        for column in range(3):
+            output_string = ""
+            for row in range(3):
+                output_string += self.to_display_square(column, row)
+                if row < 2:
+                    output_string += " "
+            standard_out(output_string)
+
 
     def to_display_square(self,column,row):
         board = self.get_board.execute()
@@ -148,6 +153,12 @@ def test_that_we_can_view_the_board_with_all_the_pieces_on():
     standard_out = lambda input:captured_output.append(input)
  
     ui.start(standard_out)
+
+    assert captured_output == [
+        "X O X",
+        "O X O",
+        "X O X",
+    ]
 
 
 if __name__ == "__main__":
