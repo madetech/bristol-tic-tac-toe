@@ -106,7 +106,7 @@ def test_that_we_can_view_the_board():
         ". . .",
     ]
 
-def test_that_we_can_view_the_board_with_one_pieces_on():
+def test_that_we_can_view_the_board_with_just_x_on():
     board = Board()
     PlacePiece(board).execute(1, 1,'X')
     ui = ConsoleUserInterface(GetBoard(board))
@@ -122,11 +122,9 @@ def test_that_we_can_view_the_board_with_one_pieces_on():
         ". . .",
     ]
 
-def test_that_we_can_view_the_board_with_some_pieces_on():
+def test_that_we_can_view_the_board_with_just_o_on():
     board = Board()
     PlacePiece(board).execute(1, 1,'O')
-    PlacePiece(board).execute(0, 2,'O')
-    PlacePiece(board).execute(2, 2,'O')
     ui = ConsoleUserInterface(GetBoard(board))
     
     captured_output = []
@@ -139,6 +137,17 @@ def test_that_we_can_view_the_board_with_some_pieces_on():
         ". O .",
         ". . .",
     ]
+
+def test_that_we_can_view_the_board_with_all_the_pieces_on():
+    get_board = type("", (), { "execute": lambda self: [["X", "O", "X"],
+                                                        ["O", "X", "O"],
+                                                        ["X", "O", "X"]] })
+    ui = ConsoleUserInterface(get_board())
+
+    captured_output = []
+    standard_out = lambda input:captured_output.append(input)
+ 
+    ui.start(standard_out)
 
 
 if __name__ == "__main__":
