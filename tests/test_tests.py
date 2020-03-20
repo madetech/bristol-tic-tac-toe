@@ -20,6 +20,7 @@ class PlacePiece:
             self.board.board[x][y] = piece
         return is_square_empty
 
+
 def test_at_the_start_of_the_game_the_board_is_empty():
     board = Board()
     assert GetBoard(board).execute() == [
@@ -48,7 +49,12 @@ def test_someone_can_place_x_in_the_bottom_left_corner():
         ['X', None, None],
     ]
 
-def test_someone_cannot_place_piece_in_square_that_is_taken():
+def test_when_someone_places_x_success_is_returned():
+    board = Board()
+    success = PlacePiece(board).execute(2, 0,'X')
+    assert success == True
+
+def test_placing_in_a_taken_location_is_invalid():
     board = Board()
     PlacePiece(board).execute(2, 0,'X')
     success = PlacePiece(board).execute(2, 0,'X')
@@ -64,11 +70,6 @@ def test_cannot_place_piece_in_square_that_is_taken_by_other_player():
         ['X', None, None],
     ]
 
-def test_when_someone_places_x_success_is_returned():
-    board = Board()
-    success = PlacePiece(board).execute(2, 0,'X')
-    assert success == True
-
 def test_someone_can_place_o_on_board():
     board = Board()
     PlacePiece(board).execute(1,1,'O')
@@ -77,3 +78,9 @@ def test_someone_can_place_o_on_board():
         [None, 'O', None],
         [None, None, None],
     ]
+
+def test_that_we_can_view_the_board():
+    view_board = BoardPrinter(GetBoard(Board()))
+    view_board.execute()
+
+
