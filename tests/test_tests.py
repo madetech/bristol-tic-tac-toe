@@ -80,7 +80,8 @@ def test_someone_can_place_o_on_board():
     ]
 
 def test_that_we_can_view_the_board():
-    view_board = BoardPrinter(GetBoard(Board()))
-    view_board.execute()
+    ui = ConsoleUserInterface(GetBoard(Board()))
+    ui.start()
+
 
 
